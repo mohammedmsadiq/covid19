@@ -11,13 +11,21 @@
     xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
     x:Class="covid19.Views.ByCountryPage">
     <ContentPage.Content>
-        <StackLayout>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition
+                    Height="50" />
+                <RowDefinition
+                    Height="*" />
+            </Grid.RowDefinitions>
             <SearchBar
+                Grid.Row="0"
                 x:Name="searchBar"
                 BackgroundColor="Transparent"
                 Placeholder="Search By Country"
                 TextChanged="searchBar_TextChanged" />
             <ListView
+                Grid.Row="1"
                 RowHeight="300"
                 HasUnevenRows="False"
                 BackgroundColor="Transparent"
@@ -37,6 +45,6 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-        </StackLayout>
+        </Grid>
     </ContentPage.Content>
 </ContentPage>

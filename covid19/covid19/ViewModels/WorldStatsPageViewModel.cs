@@ -38,6 +38,11 @@ namespace covid19.ViewModels
             this.worldStatsService = worldStatsService;
             Title = "Main Page";
             worldData = new ObservableCollection<WorldDataModel>();
+        }
+
+        public override void OnAppearing()
+        {
+            base.OnAppearing();
             this.ExecuteAsyncTask(async () =>
             {
                 await this.GetData();

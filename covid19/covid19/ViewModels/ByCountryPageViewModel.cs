@@ -21,12 +21,18 @@ namespace covid19.ViewModels
         public ByCountryPageViewModel(INavigationService navigationService, IPageDialogService pageDialogService, IWorldStatsService worldStatsService) : base(navigationService, pageDialogService)
         {
             this.WorldStatsService = worldStatsService;
-            this.Data = new ObservableCollection<CountryModel>();
+            this.Data = new ObservableCollection<CountryModel>();           
+        }
+
+        public override void OnAppearing()
+        {
+            base.OnAppearing();
             this.ExecuteAsyncTask(async () =>
             {
                 this.GetData();
             });
         }
+
         public bool Loading
         {
             get

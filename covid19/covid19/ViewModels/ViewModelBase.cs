@@ -1,54 +1,110 @@
-﻿using Prism.Commands;
+﻿using Prism;
+using Prism.AppModel;
 using Prism.Mvvm;
 using Prism.Navigation;
 using Prism.Services;
 using System;
-using System.Collections.Generic;
-using System.Text;
+using System.ComponentModel;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace covid19.ViewModels
 {
-    public class ViewModelBase : BindableBase, IInitialize, INavigationAware, IDestructible
+    public class ViewModelBase : BindableBase, INavigationAware, IDestructible, IPageLifecycleAware, IApplicationLifecycleAware, IConfirmNavigationAsync,
+      IConfirmNavigation, IActiveAware, INotifyPropertyChanged
     {
-        protected IPageDialogService PageDialogService { get; private set; }
         protected INavigationService NavigationService { get; private set; }
-        public bool IsBusy { get; set; }
+        protected IPageDialogService DialogService { get; private set; }
+
+        private bool _isBusy;
+        public bool IsBusy
+        {
+            get => _isBusy;
+            set => SetProperty(ref _isBusy, value);
+        }
 
         private string _title;
         public string Title
         {
-            get { return _title; }
-            set { SetProperty(ref _title, value); }
+            get => _title;
+            set => SetProperty(ref _title, value);
         }
 
-        public ViewModelBase(INavigationService navigationService, IPageDialogService pageDialogService)
+        public bool IsNotBusy { get; set; }
+
+        private void OnIsBusyChanged() => IsNotBusy = !IsBusy;
+
+        private void OnIsNotBusyChanged() => IsBusy = !IsNotBusy;
+
+        public ViewModelBase(INavigationService navigationService, IPageDialogService dialogService)
         {
-            NavigationService = navigationService;
-            PageDialogService = pageDialogService;
+            this.NavigationService = navigationService;
+            this.DialogService = dialogService;
         }
 
-        public virtual void Initialize(INavigationParameters parameters)
+
+        #region IActiveAware
+        public bool IsActive { get; set; }
+
+        public event EventHandler IsActiveChanged;
+
+        private void OnIsActiveChanged()
         {
+            IsActiveChanged?.Invoke(this, EventArgs.Empty);
 
+            if (IsActive)
+            {
+                OnIsActive();
+            }
+            else
+            {
+                OnIsNotActive();
+            }
         }
 
-        public virtual void OnNavigatedFrom(INavigationParameters parameters)
-        {
+        protected virtual void OnIsActive() { }
 
-        }
+        protected virtual void OnIsNotActive() { }
+        #endregion IActiveAware
 
-        public virtual void OnNavigatedTo(INavigationParameters parameters)
-        {
+        #region IConfirmNavigation
+        public virtual bool CanNavigate(INavigationParameters parameters) => true;
+        #endregion IConfirmNavigation
 
-        }
+
+        #region IConfirmNavigationAsync
+        public virtual Task<bool> CanNavigateAsync(INavigationParameters parameters) => Task.FromResult(CanNavigate(parameters));
+        #endregion IConfirmNavigationAsync
+
+
+        #region IApplicationLifecycleAware
+        public virtual void OnResume() { }
+
+        public virtual void OnSleep() { }
+        #endregion IApplicationLifecycleAware
+
+
+        #region IPageLifecycleAwar
+        public virtual void OnAppearing() { }
+
+        public virtual void OnDisappearing() { }
+        #endregion IPageLifecycleAware
+
+
+        #region IDestructible
+        public virtual void Destroy() { }
+        #endregion IDestructible
+
+        #region INavigationAware
+        public virtual void OnNavigatedFrom(INavigationParameters parameters) { }
+
+        public virtual void OnNavigatedTo(INavigationParameters parameters) { }
+        #endregion INavigationAware
 
         #region ExecuteAsyncTask
-
         protected async Task ExecuteAction(Action action)
         {
-            Device.BeginInvokeOnMainThread(() => { this.IsBusy = true; });
+            Device.BeginInvokeOnMainThread(() => { IsBusy = true; });
 
             try
             {
@@ -56,27 +112,26 @@ namespace covid19.ViewModels
             }
             catch (Exception ex)
             {
-                await this.ShowErrorMessage(ex);
+                await ShowErrorMessage(ex);
             }
 
-            await Task.Delay(1000);
-            Device.BeginInvokeOnMainThread(() => { this.IsBusy = false; });
+            Device.BeginInvokeOnMainThread(() => { IsBusy = false; });
         }
 
         protected async Task ExecuteAsyncTask(Func<Task> actionDelegate)
         {
-            Device.BeginInvokeOnMainThread(() => { this.IsBusy = true; });
+            Device.BeginInvokeOnMainThread(() => { IsBusy = true; });
 
             try
             {
-                await this.ExecuteAsyncTaskWithNoLoading(actionDelegate);
+                await ExecuteAsyncTaskWithNoLoading(actionDelegate);
             }
             catch (Exception ex)
             {
-                await this.ShowErrorMessage(ex);
+                await ShowErrorMessage(ex);
             }
 
-            Device.BeginInvokeOnMainThread(() => { this.IsBusy = false; });
+            Device.BeginInvokeOnMainThread(() => { IsBusy = false; });
 
         }
 
@@ -88,22 +143,15 @@ namespace covid19.ViewModels
             }
             catch (Exception ex)
             {
-                await this.ShowErrorMessage(ex);
+                await ShowErrorMessage(ex);
             }
         }
 
         protected async Task ShowErrorMessage(Exception ex)
         {
             //Dialog service, show error. 
-            await this.PageDialogService.DisplayAlertAsync("Error", ex.Message, "OK");
+            await DialogService.DisplayAlertAsync("Error", ex.Message, "OK");
         }
-
-
         #endregion ExecuteAsyncTask
-
-        public virtual void Destroy()
-        {
-
-        }
     }
 }

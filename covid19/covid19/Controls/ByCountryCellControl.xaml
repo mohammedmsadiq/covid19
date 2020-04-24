@@ -42,7 +42,7 @@
         Grid.RowSpan="6"
         Grid.Column="0"
         WidthRequest="0.5"
-        BackgroundColor="Gray"
+        BackgroundColor="White"
         HorizontalOptions="End"
         VerticalOptions="FillAndExpand" />
     <BoxView
@@ -50,7 +50,7 @@
         Grid.Column="0"
         Grid.ColumnSpan="2"
         HeightRequest="0.5"
-        BackgroundColor="Gray"
+        BackgroundColor="White"
         HorizontalOptions="FillAndExpand"
         VerticalOptions="End" />
     <!--Row0-->
@@ -61,7 +61,7 @@
         VerticalOptions="FillAndExpand"
         Orientation="Horizontal"
         HorizontalOptions="FillAndExpand">
-        <ffimageloading:CachedImage
+        <Image
             HorizontalOptions="Center"
             VerticalOptions="CenterAndExpand"
             Source="{Binding Flag}" />
