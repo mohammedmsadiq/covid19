@@ -3,6 +3,7 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:controls="clr-namespace:covid19.Controls"
+    BackgroundColor="#57A8DC"
     xmlns:d="http://xamarin.com/schemas/2014/forms/design"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
@@ -13,12 +14,16 @@
         <StackLayout>
             <SearchBar
                 x:Name="searchBar"
-                BackgroundColor="White"
+                BackgroundColor="Transparent"
                 Placeholder="Search By Country"
                 TextChanged="searchBar_TextChanged" />
             <ListView
                 RowHeight="300"
-                BackgroundColor="White"
+                HasUnevenRows="False"
+                BackgroundColor="Transparent"
+                IsPullToRefreshEnabled="True"
+                RefreshCommand="{Binding ReloadData}"
+                IsRefreshing="{Binding Loading}"
                 x:Name="searchResults"
                 SeparatorVisibility="None"
                 VerticalOptions="FillAndExpand"

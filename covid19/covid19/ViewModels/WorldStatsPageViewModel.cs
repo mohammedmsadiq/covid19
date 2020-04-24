@@ -70,6 +70,8 @@ namespace covid19.ViewModels
                 AffectedCountries = result.affectedCountries;
                 Recovered = result.recovered;
 
+                worldData.Clear();
+
                 worldData.Add(new WorldDataModel { CTitle = "Total Case", Result = Cases });
                 worldData.Add(new WorldDataModel { CTitle = "Today Cases", Result = TodayCases });
                 worldData.Add(new WorldDataModel { CTitle = "Total Deaths", Result = Deaths });

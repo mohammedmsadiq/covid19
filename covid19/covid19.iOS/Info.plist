@@ -32,8 +32,6 @@
 	<string>Assets.xcassets/AppIcon.appiconset</string>
 	<key>CFBundleShortVersionString</key>
 	<string>1.0.0</string>
-	<key>CFBundleVersion</key>
-	<string>16</string>
 	<key>UIStatusBarStyle</key>
 	<string>UIStatusBarStyleLightContent</string>
 	<key>NSContactsUsageDescription</key>
@@ -48,5 +46,7 @@
 	<string>siri use.</string>
 	<key>CFBundleName</key>
 	<string>COVID-19</string>
+	<key>CFBundleVersion</key>
+	<string>1</string>
 </dict>
 </plist>

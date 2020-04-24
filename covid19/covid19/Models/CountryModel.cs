@@ -5,7 +5,7 @@ namespace covid19.Models
     {
         private string lastUpdated;
 
-        public long updated { get; set; }
+        public double updated { get; set; }
         public string country { get; set; }
         public CountryInfo countryInfo { get; set; }
         public int cases { get; set; }
@@ -22,20 +22,19 @@ namespace covid19.Models
         public string continent { get; set; }
         public string Flag { get; set; }
 
-        public string LastUpdated
-        {
-            get
-            {
-
-                DateTime unixStart = new DateTime(1970, 1, 1, 0, 0, 0, 0, System.DateTimeKind.Utc);
-                long unixTimeStampInTicks = updated * TimeSpan.TicksPerSecond;
-                DateTime r = new DateTime(unixStart.Ticks + unixTimeStampInTicks, System.DateTimeKind.Utc);
-                var localDateTime = r.ToLocalTime();
-                lastUpdated = localDateTime.ToString("MM/dd/yyyy h:mm tt");
-                return lastUpdated;
-            }
-            set { }
-        }
+        //public string LastUpdated
+        //{
+        //    get
+        //    {
+        //        DateTime unixStart = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
+        //        long unixTimeStampInTicks = (long)(updated * TimeSpan.TicksPerSecond);
+        //        DateTime r = new DateTime(unixStart.Ticks + unixTimeStampInTicks, DateTimeKind.Utc);
+        //        var localDateTime = r.ToLocalTime();
+        //        lastUpdated = localDateTime.ToString("MM/dd/yyyy h:mm tt");
+        //        return lastUpdated;
+        //    }
+        //    set { }
+        //}
 
 
     }

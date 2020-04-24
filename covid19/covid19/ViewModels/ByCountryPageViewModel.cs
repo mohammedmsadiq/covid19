@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using covid19.Interfaces;
@@ -15,17 +14,13 @@ namespace covid19.ViewModels
     {
         readonly IWorldStatsService WorldStatsService;
         private ObservableCollection<CountryModel> data;
-        private string country;
         private bool loading;
-        private string flag;
 
         public ObservableCollection<CountryModel> Data { get; set; }
 
-        public ByCountryPageViewModel(INavigationService navigationService, IPageDialogService pageDialogService, IWorldStatsService worldStatsService)
-            : base(navigationService, pageDialogService)
+        public ByCountryPageViewModel(INavigationService navigationService, IPageDialogService pageDialogService, IWorldStatsService worldStatsService) : base(navigationService, pageDialogService)
         {
             this.WorldStatsService = worldStatsService;
-
             this.Data = new ObservableCollection<CountryModel>();
             this.ExecuteAsyncTask(async () =>
             {
@@ -67,7 +62,7 @@ namespace covid19.ViewModels
                             todayDeaths = item.todayDeaths,
                             recovered = item.recovered,
                             active = item.active,
-                            LastUpdated = "Last updated: " + item.LastUpdated,
+                            //LastUpdated = "Last updated: " + item.LastUpdated,
                             critical = item.critical,
                             casesPerOneMillion = item.casesPerOneMillion,
                             deathsPerOneMillion = item.deathsPerOneMillion,
@@ -75,7 +70,6 @@ namespace covid19.ViewModels
                             testsPerOneMillion = item.testsPerOneMillion,
                             continent = item.continent,
                         };
-
                         Device.BeginInvokeOnMainThread(() =>
                         {
                             this.Data.Add(itemToAdd);
