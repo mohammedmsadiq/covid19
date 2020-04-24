@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="covid19.Views.WorldStatsPage"
+    xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+    BackgroundColor="#57A8DC"
+    xmlns:controls="clr-namespace:covid19.Controls"
+    prism:ViewModelLocator.AutowireViewModel="True"
+    Title="{Binding Title}">
+    <RefreshView
+        IsRefreshing="{Binding Loading}"
+        Command="{Binding ReloadDataCommand}">
+        <CollectionView
+            Margin="2,0"
+            ItemsSource="{Binding WorldData}"
+            HorizontalScrollBarVisibility="Never"
+            VerticalOptions="FillAndExpand">
+            <CollectionView.Header>
+                <StackLayout
+                    VerticalOptions="FillAndExpand"
+                    HorizontalOptions="FillAndExpand">
+                    <Label
+                        VerticalOptions="Center"
+                        HorizontalOptions="CenterAndExpand"
+                        FontSize="35"
+                        TextColor="White"
+                        Text="COVID-19 Tracker" />
+                    <Image
+                        WidthRequest="50"
+                        HeightRequest="50"
+                        IsAnimationPlaying="True"
+                        Source="Globe2.gif" />
+                    <Label
+                        TextColor="White"
+                        Margin="0,0,0,30"
+                        VerticalOptions="Start"
+                        HorizontalOptions="CenterAndExpand"
+                        FontSize="Body"
+                        Text="Worldwide" />
+                </StackLayout>
+            </CollectionView.Header>
+            <CollectionView.ItemsLayout>
+                <GridItemsLayout
+                    Orientation="Vertical"
+                    Span="2" />
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <controls:WorldStatCellControl
+                        HeightRequest="100" />
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </RefreshView>
+</ContentPage>
