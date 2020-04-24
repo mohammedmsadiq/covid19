@@ -7,6 +7,7 @@ using Prism.Services;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -36,7 +37,6 @@ namespace covid19.ViewModels
             : base(navigationService, pageDialogService)
         {
             this.worldStatsService = worldStatsService;
-            Title = "Main Page";
             worldData = new ObservableCollection<WorldDataModel>();
         }
 
@@ -77,17 +77,17 @@ namespace covid19.ViewModels
 
                 worldData.Clear();
 
-                worldData.Add(new WorldDataModel { CTitle = "Total Case", Result = Cases });
-                worldData.Add(new WorldDataModel { CTitle = "Today Cases", Result = TodayCases });
-                worldData.Add(new WorldDataModel { CTitle = "Total Deaths", Result = Deaths });
-                worldData.Add(new WorldDataModel { CTitle = "Today Deaths", Result = TodayDeath });
-                worldData.Add(new WorldDataModel { CTitle = "Active Cases", Result = Active });
-                worldData.Add(new WorldDataModel { CTitle = "Today Recovered", Result = Recovered });
-                worldData.Add(new WorldDataModel { CTitle = "Total Tests", Result = Tests });
-                worldData.Add(new WorldDataModel { CTitle = "Affected Countries", Result = AffectedCountries });
-                worldData.Add(new WorldDataModel { CTitle = "Cases Per One Million", Result = (int)Math.Round(CasesPerOneMillion) });
-                worldData.Add(new WorldDataModel { CTitle = "Deaths Per One Million", Result = (int)Math.Round(DeathsPerOneMillion) });
-                worldData.Add(new WorldDataModel { CTitle = "Tests Per One Million", Result = (int)Math.Round(TestsPerOneMillion) });
+                worldData.Add(new WorldDataModel { CTitle = "Total Case", Result = string.Format(CultureInfo.InvariantCulture, "{0:0,0}", Cases) });
+                worldData.Add(new WorldDataModel { CTitle = "Today Cases", Result = string.Format(CultureInfo.InvariantCulture, "{0:0,0}", TodayCases) });
+                worldData.Add(new WorldDataModel { CTitle = "Total Deaths", Result = string.Format(CultureInfo.InvariantCulture, "{0:0,0}", Deaths) });
+                worldData.Add(new WorldDataModel { CTitle = "Today Deaths", Result = string.Format(CultureInfo.InvariantCulture, "{0:0,0}", TodayDeath) });
+                worldData.Add(new WorldDataModel { CTitle = "Active Cases", Result = string.Format(CultureInfo.InvariantCulture, "{0:0,0}", Active) });
+                worldData.Add(new WorldDataModel { CTitle = "Today Recovered", Result = string.Format(CultureInfo.InvariantCulture, "{0:0,0}", Recovered) });
+                worldData.Add(new WorldDataModel { CTitle = "Total Tests", Result = string.Format(CultureInfo.InvariantCulture, "{0:0,0}", Tests) });
+                worldData.Add(new WorldDataModel { CTitle = "Affected Countries", Result = string.Format(CultureInfo.InvariantCulture, "{0:0,0}", AffectedCountries) });
+                worldData.Add(new WorldDataModel { CTitle = "Cases Per One Million", Result = string.Format(CultureInfo.InvariantCulture, "{0:0,0.0}", CasesPerOneMillion) });
+                worldData.Add(new WorldDataModel { CTitle = "Deaths Per One Million", Result = string.Format(CultureInfo.InvariantCulture, "{0:0,0.0}", DeathsPerOneMillion) });
+                worldData.Add(new WorldDataModel { CTitle = "Tests Per One Million", Result = string.Format(CultureInfo.InvariantCulture, "{0:0,0.0}", TestsPerOneMillion) });
 
                 this.Loading = false;
             });
