@@ -68,7 +68,6 @@ namespace covid19.ViewModels
                             todayDeaths = item.todayDeaths,
                             recovered = item.recovered,
                             active = item.active,
-                            //LastUpdated = "Last updated: " + item.LastUpdated,
                             critical = item.critical,
                             casesPerOneMillion = item.casesPerOneMillion,
                             deathsPerOneMillion = item.deathsPerOneMillion,
